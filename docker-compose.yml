@@ -8,6 +8,4 @@ services:
         - "8080:8080"
       volumes:
         - .:/usr/src/app/
-        - /usr/src/app/my-app/node_modules
-      mem_limit: 1024m
-      mem_reservation: 512M
+        - /usr/src/app/node_modules

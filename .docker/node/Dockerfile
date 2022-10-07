@@ -15,4 +15,6 @@ COPY . /usr/src/app/
 
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
+RUN chown -R 1000:1000 /usr/src/app
+
 CMD ["npm", "run", "serve"]
