@@ -1,6 +1,8 @@
 FROM node:16-alpine
 EXPOSE 8080
 
+RUN apk add --no-cache bash
+
 # set working directory
 WORKDIR /usr/src/app
 
