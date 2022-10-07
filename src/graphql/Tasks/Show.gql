@@ -1,0 +1,14 @@
+query showTask($id: ID!) {
+    task(id:$id) {
+        id
+        title
+        description
+        user {
+            id
+            name
+            email
+        }
+        created_at
+        updated_at    
+    }
+}

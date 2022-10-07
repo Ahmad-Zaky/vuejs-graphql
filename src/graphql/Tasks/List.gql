@@ -1,0 +1,13 @@
+query listTasks {
+    tasks(first:10, page:1) {
+        data {
+            id
+            title
+            created_at
+        }
+        paginatorInfo {
+            currentPage
+            lastPage
+        }
+    }
+}

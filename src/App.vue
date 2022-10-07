@@ -1,21 +1,18 @@
 <template>
   <div id="app">
-    <div class="center">
-      <img alt="Vue logo" src="./assets/logo.png">
-    </div>
     <div>
-      <TaskList/>
+      <Tasks />
     </div>
   </div>
 </template>
 
 <script>
-import TaskList from './components/TaskList.vue'
+import Tasks from './components/Tasks.vue'
 
 export default {
   name: 'App',
   components: {
-    TaskList
+    Tasks
   }
 }
 </script>
