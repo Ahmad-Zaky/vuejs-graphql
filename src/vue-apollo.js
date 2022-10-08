@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
+import 'regenerator-runtime/runtime'
 
 // Install the vue plugin
 Vue.use(VueApollo)
 
 // Name of the localStorage item
-const AUTH_TOKEN = 'apollo-token'
+export const AUTH_TOKEN = 'apollo-token'
 
 // Http endpoint
 const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:4000/graphql'
@@ -49,14 +50,16 @@ const defaultOptions = {
   // clientState: { resolvers: { ... }, defaults: { ... } }
 }
 
+// Create apollo client
+const options = {}
+export const { apolloClient, wsClient } = createApolloClient({
+  ...defaultOptions,
+  ...options,
+});
+apolloClient.wsClient = wsClient
+
 // Call this in the Vue app file
-export function createProvider (options = {}) {
-  // Create apollo client
-  const { apolloClient, wsClient } = createApolloClient({
-    ...defaultOptions,
-    ...options,
-  })
-  apolloClient.wsClient = wsClient
+export function createProvider () {
 
   // Create vue apollo provider
   const apolloProvider = new VueApollo({
@@ -68,9 +71,18 @@ export function createProvider (options = {}) {
     },
     errorHandler (error) {
       // eslint-disable-next-line no-console
-      console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+      console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message);
+      
+      // Handle any unauthenticated requests
+      if (
+          error.networkError !== null &&
+          error.networkError.statusCode === 401
+      ) {
+        localStorage.removeItem(AUTH_TOKEN);
+        location.assign("/login");
+      }
     },
-  })
+  });
 
   return apolloProvider
 }

@@ -148,7 +148,6 @@ export default {
             this.errors.title = extension.validation['input.title']
             this.errors.description = extension.validation['input.description']
           }
-          console.log('extensions', extensions, this.errors)
         });
       });
     },

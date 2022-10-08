@@ -1,12 +1,47 @@
 <template>
   <div id="app">
     <nav class="center">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link to="/">Home</router-link> 
+      <div v-if="isAuthenticated">
+        <div>
+          Hi, {{ user.name }} ({{ user.email }})
+          <button type="button" @click="submitLogout">Log out</button>
+        </div>
+      </div>
+      
+      <div class="inline-block" v-else>
+        | <router-link to="/login">Login</router-link>
+      </div>
+
     </nav>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  beforeCreate() {
+    if (! this.$store.getters.isAuthenticated) {
+      this.$router.push("/login");
+    }
+  },
+  computed: {
+    ...mapGetters("Auth", ["isAuthenticated", "user"]),
+  },
+  mounted() {
+    this.attemptAuthentication();
+  },
+  methods: {
+    ...mapActions("Auth", ["attemptAuthentication", "logout"]),
+    submitLogout() {
+      this.logout();
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
 
 <style>
 #app {
@@ -32,4 +67,9 @@ nav a.router-link-exact-active {
 .center {
   text-align: center;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
 </style>

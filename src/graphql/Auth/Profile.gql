@@ -1,0 +1,7 @@
+query profile {
+  profile {
+    name
+    email
+    created_at
+  }
+}
