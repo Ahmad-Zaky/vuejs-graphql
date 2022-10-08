@@ -1,13 +1,17 @@
-query listTasks {
-    tasks(first:10, page:1) {
+query listTasks($perPage: Int!, $page: Int!) {
+    tasks(first:$perPage, page:$page) {
         data {
             id
             title
             created_at
         }
         paginatorInfo {
+            count
             currentPage
+            hasMorePages
             lastPage
+            perPage
+            total
         }
     }
 }

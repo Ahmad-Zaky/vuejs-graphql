@@ -1,34 +1,35 @@
 <template>
   <div id="app">
-    <div>
-      <Tasks />
-    </div>
+    <nav class="center">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/login">Login</router-link>
+    </nav>
+    <router-view/>
   </div>
 </template>
 
-<script>
-import Tasks from './components/Tasks.vue'
-
-export default {
-  name: 'App',
-  components: {
-    Tasks
-  }
-}
-</script>
-
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 
 .center {
   text-align: center;
 }
-
 </style>
